@@ -39,8 +39,8 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <Notification message="hoge" />
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+          <Notification />
           <div className="relative flex h-screen flex-col">
             <Navbar />
             <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">

@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "@/fetch";
+import { useApi } from "@/hooks/useApi";
 import { FormAuthenticate } from "@/generate/openapi-zod";
 import { $path } from "@/generate/path";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,17 +9,15 @@ import { Input } from "@nextui-org/input";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useNotificationStore } from "@/stores/notification";
 
 type Schema = z.infer<typeof FormAuthenticate>;
 
 export function LoginForm() {
-  const router = useRouter();
+  const api = useApi();
+  const { open } = useNotificationStore();
 
-  async function hoge() {
-    await api.GET("/health", {});
-    console.log("hogehgoe");
-  }
-  hoge();
+  const router = useRouter();
 
   const {
     register,
@@ -35,12 +33,12 @@ export function LoginForm() {
   const password = watch("password");
 
   async function onSubmit(data: Schema) {
-    const res = await api.POST("/auth/authenticate", {
+    await api.POST("/auth/authenticate", {
       body: data,
     });
-    router.push($path("/auth/vendor/products"));
 
-    console.log(res);
+    router.push($path("/auth/vendor/products"));
+    open("ログインしました");
   }
 
   return (
