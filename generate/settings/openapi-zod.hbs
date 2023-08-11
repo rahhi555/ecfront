@@ -16,11 +16,5 @@ i18next.init({
 z.setErrorMap(zodI18nMap);
 
 {{#each schemas}}
-const {{@key}} = {{{this}}};
+export const {{@key}} = {{{this}}};
 {{/each}}
-
-export const schemas = {
-{{#each schemas}}
-	{{@key}},
-{{/each}}
-};

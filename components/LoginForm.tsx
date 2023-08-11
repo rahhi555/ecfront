@@ -3,11 +3,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { schemas } from "@/generate/openapi-zod";
+import { FormAuthenticate } from "@/generate/openapi-zod";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 
-type Schema = z.infer<(typeof schemas)["FormAuthenticate"]>;
+type Schema = z.infer<typeof FormAuthenticate>;
 
 export function LoginForm() {
   const {
@@ -16,7 +16,7 @@ export function LoginForm() {
     formState: { errors },
     watch,
   } = useForm<Schema>({
-    resolver: zodResolver(schemas["FormAuthenticate"]),
+    resolver: zodResolver(FormAuthenticate),
     defaultValues: { email: "", password: "", role: "VENDOR" },
   });
 
