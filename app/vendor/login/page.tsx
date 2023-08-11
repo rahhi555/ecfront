@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/login-form";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <div className="flex justify-center">
       <Card className="lg:w-3/4">
