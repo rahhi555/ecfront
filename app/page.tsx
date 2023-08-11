@@ -1,7 +1,6 @@
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { $path } from "@/generate/path";
 
@@ -24,7 +23,7 @@ export default function Home() {
         <Link
           isExternal
           as={NextLink}
-          href={siteConfig.links.docs}
+          href={"/"}
           className={buttonStyles({
             color: "primary",
             radius: "full",
