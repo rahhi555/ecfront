@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { schemas } from "@/generate/client";
+import { schemas } from "@/generate/openapi-zod";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 
@@ -19,12 +19,13 @@ export function LoginForm() {
     resolver: zodResolver(schemas["FormAuthenticate"]),
     defaultValues: { email: "", password: "", role: "VENDOR" },
   });
-  function onSubmit(data: Schema) {
-    console.log(data);
-  }
 
   const email = watch("email");
   const password = watch("password");
+
+  function onSubmit(data: Schema) {
+    console.log(data);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="lg:px-6">
@@ -38,7 +39,6 @@ export function LoginForm() {
         variant="bordered"
         color="primary"
         size="sm"
-        placeholder="test@example.com"
         className="mb-4"
       />
       <Input
@@ -51,7 +51,6 @@ export function LoginForm() {
         variant="bordered"
         color="primary"
         size="sm"
-        placeholder="********"
         className="mb-4"
       />
       <div className="flex justify-center">

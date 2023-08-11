@@ -34,7 +34,6 @@ export default function Home() {
           Documentation
         </Link>
         <Link
-          isExternal
           as={NextLink}
           className={buttonStyles({ variant: "bordered", radius: "full" })}
           href={$path("/vendor/login")}
