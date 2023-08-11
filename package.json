@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix && prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
-    "build-zodios": "pnpx openapi-zod-client ../ecapi/src/main/resources/openapi/reference/schema.yaml -o generate/client.ts -b http://localhost:8080",
+    "build-zod": "pnpx openapi-zod-client ../ecapi/src/main/resources/openapi/reference/schema.yaml -t generate/settings/client.hbs -o generate/client.ts",
     "build-type": "pnpx openapi-typescript ../ecapi/src/main/resources/openapi/reference/schema.yaml -o generate/types.ts",
     "build-path": "npx type-safe-path -o generate/path.ts"
   },
