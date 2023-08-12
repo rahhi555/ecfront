@@ -1,10 +1,21 @@
-import { Link } from "@nextui-org/link";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { Title } from "@/components/title";
+import { AddProductForm } from "./_components/add-product-form";
+
+const items = [
+  { label: "商品一覧", href: "/authed/vendor/products" },
+  { label: "商品追加", href: "#" },
+];
 
 export default function VendorProductsNewPage() {
   return (
     <div>
-      <Link href="/authed/vendor/products">back</Link>
-      <h1>New Products</h1>
+      <Breadcrumb items={items} />
+      <Title title="商品追加" />
+
+      <div>
+        <AddProductForm />
+      </div>
     </div>
   );
 }

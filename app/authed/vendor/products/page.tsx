@@ -4,10 +4,14 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { MdAdd } from "react-icons/md";
 import { Title } from "@/components/title";
+import { Breadcrumb } from "@/components/breadcrumb";
+
+const items = [{ label: "商品一覧", href: "#" }];
 
 export default function VendorProductsPage() {
   return (
     <div>
+      <Breadcrumb items={items} />
       <Title title="商品一覧" />
 
       <Button

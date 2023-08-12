@@ -5,11 +5,16 @@ import { Button } from "@nextui-org/button";
 import React from "react";
 
 export function SignInOutButton({ className }: { className?: string }) {
-  const { data: session } = useSession();
+  const session = useSession();
 
   return (
     <>
-      {session?.user ? (
+      {session.status === "loading" && (
+        <Button variant="light" className={className}>
+          Loading
+        </Button>
+      )}
+      {session.status === "authenticated" && (
         <Button
           variant="light"
           color="danger"
@@ -18,7 +23,8 @@ export function SignInOutButton({ className }: { className?: string }) {
         >
           Sign Out
         </Button>
-      ) : (
+      )}
+      {session.status === "unauthenticated" && (
         <Button
           variant="light"
           color="primary"
