@@ -38,6 +38,9 @@ dependencies:
   '@nextui-org/snippet':
     specifier: 2.0.10
     version: 2.0.10(framer-motion@10.15.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
+  '@nextui-org/spinner':
+    specifier: ^2.0.7
+    version: 2.0.7(react@18.2.0)(tailwindcss@3.3.3)
   '@nextui-org/switch':
     specifier: 2.0.9
     version: 2.0.9(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
@@ -56,6 +59,9 @@ dependencies:
   '@react-aria/visually-hidden':
     specifier: ^3.8.3
     version: 3.8.3(react@18.2.0)
+  '@react-stately/data':
+    specifier: ^3.10.1
+    version: 3.10.1(react@18.2.0)
   '@types/node':
     specifier: 20.4.10
     version: 20.4.10
@@ -113,6 +119,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.45.4
     version: 7.45.4(react@18.2.0)
+  react-icons:
+    specifier: ^4.10.1
+    version: 4.10.1(react@18.2.0)
   tailwind-variants:
     specifier: ^0.1.13
     version: 0.1.13(tailwindcss@3.3.3)
@@ -1253,6 +1262,16 @@ packages:
 
   /@react-stately/collections@3.10.0(react@18.2.0):
     resolution: {integrity: sha512-PyJEFmt9X0kDMF7D4StGnTdXX1hgyUcTXvvXU2fEw6OyXLtmfWFHmFARRtYbuelGKk6clmJojYmIEds0k8jdww==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+    dependencies:
+      '@react-types/shared': 3.19.0(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      react: 18.2.0
+    dev: false
+
+  /@react-stately/data@3.10.1(react@18.2.0):
+    resolution: {integrity: sha512-7RBVr5NMGwruZkxuWZtGrZydPlfoZ2VNxzUkc9VXF1gAWbGP7l0t2MoxDgigznUHNS/iYBJ4Y/iYWx3GXtDsrQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
     dependencies:
@@ -3451,6 +3470,14 @@ packages:
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /react-icons@4.10.1(react@18.2.0):
+    resolution: {integrity: sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==}
+    peerDependencies:
+      react: '*'
     dependencies:
       react: 18.2.0
     dev: false
