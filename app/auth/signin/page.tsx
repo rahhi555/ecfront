@@ -1,7 +1,3 @@
-export type Query = {
-  message?: string;
-};
-
 import { LoginForm } from "@/components/login-form";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 
