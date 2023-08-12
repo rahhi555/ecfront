@@ -1,12 +1,12 @@
-import { api } from "@/fetch";
+import { serverApi } from "@/hooks/useApi";
 
 async function getProducts() {
-  const { data } = await api.GET("/products", {});
+  const { data } = await serverApi().GET("/products", {});
 
   return data;
 }
 
-export default async function ProductList() {
+export async function ProductList() {
   const products = await getProducts();
 
   return (
