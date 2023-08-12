@@ -1,26 +1,31 @@
 import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
-export default withAuth(function middleware(req, eve) {}, {
-  callbacks: {
-    authorized: ({ req, token }) => {
-      const { pathname } = req.nextUrl;
-      if (
-        pathname.startsWith("/authed/vendor") &&
-        token?.user.role === "VENDOR"
-      ) {
-        return true;
-      }
-      if (
-        pathname.startsWith("/authed/customer") &&
-        token?.user.role === "CUSTOMER"
-      ) {
-        return true;
-      }
-
-      return false;
+export default withAuth(
+  function middleware(req) {
+    if (
+      req.nextUrl.pathname.startsWith("/authed/vendor") &&
+      req.nextauth?.token?.user.role !== "VENDOR"
+    ) {
+      return NextResponse.rewrite(
+        new URL("/auth/login?message=ログインしてください", req.url),
+      );
+    }
+    if (
+      req.nextUrl.pathname.startsWith("/authed/customer") &&
+      req.nextauth?.token?.user.role !== "CUSTOMER"
+    ) {
+      return NextResponse.rewrite(
+        new URL("/auth/login?message=ログインしてください", req.url),
+      );
+    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
     },
   },
-});
+);
 
 export const config = {
   matcher: ["/authed/:path*"],
