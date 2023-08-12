@@ -20,8 +20,8 @@ import { SignInOutButton } from "./signin-out-button";
 
 const links = [
   {
-    label: "Login",
-    href: $path("/vendor/login"),
+    label: "DUMMY",
+    href: $path("/auth/signin"),
   },
 ];
 
@@ -58,7 +58,7 @@ export const Navbar = () => {
         </NavbarBrand>
         <ul className="ml-2 hidden justify-start gap-4 lg:flex">
           {links.map((item) => (
-            <NavbarItem key={item.href}>
+            <NavbarItem key={item.href} className="flex">
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
@@ -71,9 +71,6 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-          <NavbarItem>
-            <SignInOutButton />
-          </NavbarItem>
         </ul>
       </NavbarContent>
 
@@ -82,6 +79,9 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        <NavbarItem>
+          <SignInOutButton />
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
@@ -90,6 +90,9 @@ export const Navbar = () => {
 
       <NavbarMenu>
         {searchInput}
+        <NavbarItem>
+          <SignInOutButton className="w-full" />
+        </NavbarItem>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {links.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

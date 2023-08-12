@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 import { button as buttonStyles } from "@nextui-org/theme";
 import { title, subtitle } from "@/components/primitives";
-import { $path } from "@/generate/path";
+import { SignInOutButton } from "@/components/signin-out-button";
 
 export default function Home() {
   return (
@@ -32,13 +32,7 @@ export default function Home() {
         >
           Documentation
         </Link>
-        <Link
-          as={NextLink}
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
-          href={$path("/vendor/login")}
-        >
-          VENDOR
-        </Link>
+        <SignInOutButton />
       </div>
     </section>
   );

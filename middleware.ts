@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
+    console.log(req.nextUrl.pathname);
     if (
       req.nextUrl.pathname.startsWith("/authed/vendor") &&
       req.nextauth?.token?.user.role !== "VENDOR"
     ) {
       return NextResponse.rewrite(
-        new URL("/auth/login?message=ログインしてください", req.url),
+        new URL("/api/auth/signin?message=ログインしてください", req.url),
       );
     }
     if (
@@ -16,7 +17,7 @@ export default withAuth(
       req.nextauth?.token?.user.role !== "CUSTOMER"
     ) {
       return NextResponse.rewrite(
-        new URL("/auth/login?message=ログインしてください", req.url),
+        new URL("/api/auth/signin?message=ログインしてください", req.url),
       );
     }
   },
