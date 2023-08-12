@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useNotificationStore } from "@/stores/notification";
+import { signIn } from "next-auth/react";
 
 type Schema = z.infer<typeof FormAuthenticate>;
 
@@ -33,11 +34,9 @@ export function LoginForm() {
   const password = watch("password");
 
   async function onSubmit(data: Schema) {
-    await api.POST("/auth/authenticate", {
-      body: data,
-    });
+    await signIn("credentials", { password, email });
 
-    router.push($path("/auth/vendor/products"));
+    router.push($path("/authed/vendor/products"));
     open("ログインしました");
   }
 

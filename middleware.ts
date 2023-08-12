@@ -1,15 +1,27 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { withAuth } from "next-auth/middleware";
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  console.log("request", request);
-  console.log("response", response);
-  return response;
-}
+export default withAuth(function middleware(req, eve) {}, {
+  callbacks: {
+    authorized: ({ req, token }) => {
+      const { pathname } = req.nextUrl;
+      if (
+        pathname.startsWith("/authed/vendor") &&
+        token?.user.role === "VENDOR"
+      ) {
+        return true;
+      }
+      if (
+        pathname.startsWith("/authed/customer") &&
+        token?.user.role === "CUSTOMER"
+      ) {
+        return true;
+      }
 
-// See "Matching Paths" below to learn more
+      return false;
+    },
+  },
+});
+
 export const config = {
-  matcher: "/health",
+  matcher: ["/authed/:path*"],
 };

@@ -15,11 +15,13 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { SearchIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
+import { $path } from "@/generate/path";
+import { SignInOutButton } from "./signin-out-button";
 
 const links = [
   {
-    label: "Logout",
-    href: "/logout",
+    label: "Login",
+    href: $path("/vendor/login"),
   },
 ];
 
@@ -69,6 +71,9 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
+          <NavbarItem>
+            <SignInOutButton />
+          </NavbarItem>
         </ul>
       </NavbarContent>
 
