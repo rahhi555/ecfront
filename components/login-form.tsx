@@ -1,6 +1,5 @@
 "use client";
 
-import { useApi } from "@/hooks/useApi";
 import { FormAuthenticate } from "@/generate/openapi-zod";
 import { $path } from "@/generate/path";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,9 +14,7 @@ import { signIn } from "next-auth/react";
 type Schema = z.infer<typeof FormAuthenticate>;
 
 export function LoginForm() {
-  const api = useApi();
   const { open } = useNotificationStore();
-
   const router = useRouter();
 
   const {
@@ -34,7 +31,15 @@ export function LoginForm() {
   const password = watch("password");
 
   async function onSubmit(data: Schema) {
-    await signIn("credentials", { password, email });
+    const result = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+
+    if (result == null || result.error) {
+      open("ログインに失敗しました");
+      return;
+    }
 
     router.push($path("/authed/vendor/products"));
     open("ログインしました");

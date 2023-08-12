@@ -12,6 +12,7 @@ const handler = NextAuth({
           placeholder: "test@example.com",
         },
         password: { label: "Password", type: "password" },
+        role: { type: "hidden" },
       },
       async authorize(credentials, req) {
         const res = await fetch(
@@ -21,7 +22,11 @@ const handler = NextAuth({
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...credentials, role: "VENDOR" }),
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+              role: credentials?.role,
+            }),
           },
         );
         const user = await res.json();
