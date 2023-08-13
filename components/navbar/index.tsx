@@ -16,7 +16,8 @@ import clsx from "clsx";
 import { SearchIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import { $path } from "@/generate/path";
-import { SignInOutButton } from "./signin-out-button";
+import { SignInOutButton } from "@/components/signin-out-button";
+import { NavBarDropDown } from "./dropdown";
 
 const links = [
   {
@@ -78,9 +79,8 @@ export const Navbar = () => {
         className="hidden basis-1/5 sm:flex sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem>
-          <SignInOutButton />
+          <NavBarDropDown />
         </NavbarItem>
       </NavbarContent>
 

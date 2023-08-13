@@ -1,6 +1,5 @@
 "use client";
 
-import { useClientApi } from "@/hooks/useApi";
 import {
   Table,
   TableHeader,
@@ -14,7 +13,8 @@ import { useState } from "react";
 import type { components } from "@/generate/openapi-type";
 import { Spinner } from "@nextui-org/spinner";
 import { User } from "@nextui-org/user";
-import { useAsyncList } from "@react-stately/data";
+import { $path } from "@/generate/path";
+import { useRouter } from "next/navigation";
 
 type DTOProduct = components["schemas"]["DTOProduct"];
 
@@ -26,19 +26,12 @@ const columns = [
   { key: "createdAt", label: "作成日" },
 ];
 
-export function ProductList() {
-  const { GET } = useClientApi();
-  const [loading, setIsLoading] = useState(true);
-
-  const products = useAsyncList<DTOProduct>({
-    async load({ signal }) {
-      const { data } = await GET("/products", { signal });
-      setIsLoading(false);
-      return {
-        items: data || [],
-      };
-    },
-  });
+export function ClientList({
+  products,
+}: {
+  products: DTOProduct[] | undefined;
+}) {
+  const { push } = useRouter();
 
   return (
     <Table>
@@ -48,13 +41,19 @@ export function ProductList() {
         ))}
       </TableHeader>
 
-      <TableBody
-        items={products.items}
-        isLoading={loading}
-        loadingContent={<Spinner label="Loading..." />}
-      >
+      <TableBody items={products}>
         {(product) => (
-          <TableRow key={product.id}>
+          <TableRow
+            key={product.id}
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={() =>
+              push(
+                $path("/authed/vendor/products/[id]/edit", {
+                  params: { id: product.id },
+                }),
+              )
+            }
+          >
             {(columnKey) => (
               <TableCell>
                 {columnKey === "name" && (
