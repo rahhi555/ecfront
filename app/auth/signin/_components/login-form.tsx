@@ -40,8 +40,8 @@ export function LoginForm() {
       open("ログインに失敗しました");
       return;
     }
-
     router.push($path("/authed/vendor/products"));
+    router.refresh();
     open("ログインしました");
   }
 
