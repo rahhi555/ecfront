@@ -8,14 +8,6 @@ import type { components } from "@/generate/openapi-type";
 
 type ErrorBase = components["schemas"]["ErrorBase"];
 
-const api = createClient<paths>({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
-});
-
-// モジュールスコープで一度作成したProxyを保持するための変数
-let clientProxiedApi: typeof api | null = null;
-let serverProxiedApi: typeof api | null = null;
-
 class ApiError extends Error {
   constructor(error: ErrorBase) {
     super(error.detail);
@@ -27,85 +19,57 @@ class ApiError extends Error {
 export function useClientApi() {
   const { open } = useNotificationStore();
 
-  const interceptHandler = {
-    apply: async function (
-      target: any,
-      thisArg: any,
-      argArray: Parameters<typeof api.POST>,
-    ) {
+  const api = createClient<paths>({
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    fetch: async (url, init) => {
       const session = await getSession();
 
-      if (session?.user?.token) {
-        argArray[1].headers = {
-          ...argArray[1].headers,
-          Authorization: `Bearer ${session.user.token}`,
-        };
-      }
+      init!.headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.token}`,
+        ...init!.headers,
+      };
 
-      const response: { data?: any; error?: ErrorBase; response: any } =
-        await target.apply(thisArg, argArray);
+      const response = await fetch(url, init);
 
-      if (response.error) {
-        open(response.error.detail);
-        throw new ApiError(response.error);
+      if (response.status >= 400) {
+        const error: ErrorBase = await response.json();
+        open(error.detail);
+        throw new ApiError(error);
       }
 
       return response;
     },
-  };
+  });
 
-  // Proxyがまだ作成されていない場合にのみ新しいProxyを作成
-  if (clientProxiedApi == null) {
-    clientProxiedApi = {
-      ...api,
-      GET: new Proxy(api.GET, interceptHandler),
-      POST: new Proxy(api.POST, interceptHandler),
-      PUT: new Proxy(api.PUT, interceptHandler),
-      PATCH: new Proxy(api.PATCH, interceptHandler),
-      DELETE: new Proxy(api.DELETE, interceptHandler),
-    };
-  }
-
-  return clientProxiedApi;
+  return api;
 }
 
 export function serverApi() {
-  const interceptHandler = {
-    apply: async function (
-      target: any,
-      thisArg: any,
-      argArray: Parameters<typeof api.GET>,
-    ) {
+  const api = createClient<paths>({
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    fetch: async (url, init) => {
       const session = await getServerSession(nextAuthOptions);
 
-      if (session?.user?.token) {
-        argArray[1].headers = {
-          ...argArray[1].headers,
-          Authorization: `Bearer ${session.user.token}`,
-        };
-      }
+      init!.headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.token}`,
+        ...init!.headers,
+      };
 
-      const response: { data?: any; error?: ErrorBase; response: any } =
-        await target.apply(thisArg, argArray);
+      const response = await fetch(url, init);
 
-      if (response.error) {
-        throw new ApiError(response.error);
+      if (response.status >= 400) {
+        const error: ErrorBase = await response.json();
+        throw new ApiError(error);
       }
 
       return response;
     },
-  };
+  });
 
-  if (serverProxiedApi == null) {
-    serverProxiedApi = {
-      ...api,
-      GET: new Proxy(api.GET, interceptHandler),
-      POST: new Proxy(api.POST, interceptHandler),
-      PUT: new Proxy(api.PUT, interceptHandler),
-      PATCH: new Proxy(api.PATCH, interceptHandler),
-      DELETE: new Proxy(api.DELETE, interceptHandler),
-    };
-  }
-
-  return serverProxiedApi;
+  return api;
 }
