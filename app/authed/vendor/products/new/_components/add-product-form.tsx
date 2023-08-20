@@ -116,7 +116,7 @@ export function AddProductForm() {
               size="lg"
               color="primary"
             >
-              Login
+              追加
             </Button>
           </div>
         </form>
