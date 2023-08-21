@@ -4,6 +4,8 @@ import { Chip } from "@nextui-org/chip";
 import { MdShoppingCart } from "react-icons/md";
 import { Button } from "@nextui-org/button";
 import { serverApi } from "@/hooks/useApi";
+import { $path } from "@/generate/path";
+import Link from "next/link";
 
 export async function Product({ id }: { id: number }) {
   const { data } = await serverApi().GET("/products/{id}", {
@@ -39,7 +41,12 @@ export async function Product({ id }: { id: number }) {
             残 {data?.stock}
           </Chip>
 
-          <Button>
+          <Button
+            as={Link}
+            href={$path("/authed/vendor/products/[id]/edit", {
+              params: { id },
+            })}
+          >
             <p>編集</p>
           </Button>
         </CardFooter>

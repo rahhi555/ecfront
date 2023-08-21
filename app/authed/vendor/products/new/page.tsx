@@ -1,5 +1,4 @@
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Title } from "@/components/title";
+import { NavbarBottom } from "@/components/navbar-bottom";
 import { AddProductForm } from "./_components/add-product-form";
 
 const items = [
@@ -10,8 +9,7 @@ const items = [
 export default function VendorProductsNewPage() {
   return (
     <div>
-      <Breadcrumb items={items} />
-      <Title title="商品追加" />
+      <NavbarBottom items={items} title="商品追加" />
 
       <div>
         <AddProductForm />

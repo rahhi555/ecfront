@@ -1,27 +1,24 @@
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Title } from "@/components/title";
-import { Product } from "./_component/product";
-import { Suspense } from "react";
-import { Spinner } from "@nextui-org/spinner";
+import { NavbarBottom } from "@/components/navbar-bottom";
+import { $path } from "@/generate/path";
 
-const items = [
-  { label: "商品一覧", href: "/authed/vendor/products" },
-  { label: "商品編集", href: "#" },
-];
-
-export default async function VendorProductEditPage({
+export default function VendorProductsEditPage({
   params,
 }: {
   params: { id: number };
 }) {
+  const items = [
+    { label: "商品一覧", href: "/authed/vendor/products" },
+    {
+      label: "商品詳細",
+      href: $path("/authed/vendor/products/[id]", { params }),
+    },
+    { label: "商品編集", href: "#" },
+  ];
+
   return (
     <div>
-      <Breadcrumb items={items} />
-      <Title title="商品編集" />
-
-      <Suspense fallback={<Spinner className="mx-auto mt-10 w-full" />}>
-        <Product id={params.id} />
-      </Suspense>
+      <NavbarBottom items={items} title="商品編集" />
+      VendorProductsEditPage
     </div>
   );
 }

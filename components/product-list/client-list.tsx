@@ -48,7 +48,7 @@ export function ClientList({
             className="cursor-pointer hover:bg-slate-100"
             onClick={() =>
               push(
-                $path("/authed/vendor/products/[id]/edit", {
+                $path("/authed/vendor/products/[id]", {
                   params: { id: product.id },
                 }),
               )
